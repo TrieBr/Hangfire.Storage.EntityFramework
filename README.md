@@ -1,6 +1,6 @@
-# Hangfire.Storage.MySql
+# Hangfire.Storage.EntityFramework
 
-[![NuGet Stats](https://img.shields.io/nuget/v/Hangfire.Storage.MySql.svg)](https://www.nuget.org/packages/Hangfire.Storage.MySql)
+[![NuGet Stats](https://img.shields.io/nuget/v/Hangfire.Storage.EntityFramework.svg)](https://www.nuget.org/packages/Hangfire.Storage.EntityFramework)
 
 This is MySQL storage adapter for [Hangfire](https://www.hangfire.io/).
 

@@ -31,7 +31,7 @@ let release () = packages |> Proj.packMany
 let publish apiKey = packages |> Seq.iter (Proj.publishNugetOrg apiKey)
 
 Target.create "Refresh" (fun _ ->
-    // Proj.regenerateStrongName "Hangfire.Storage.MySql.snk"
+    // Proj.regenerateStrongName "Hangfire.Storage.EntityFramework.snk"
     Proj.updateCommonTargets "Common.targets"
 )
 
