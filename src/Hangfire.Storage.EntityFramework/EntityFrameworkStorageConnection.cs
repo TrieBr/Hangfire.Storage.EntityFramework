@@ -2,26 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Dapper;
 using Hangfire.Common;
 using Hangfire.Logging;
 using Hangfire.Server;
+using Hangfire.Storage.EntityFramework.Configuration;
 using Hangfire.Storage.EntityFramework.Entities;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Hangfire.Storage.EntityFramework
 {
     public class EntityFrameworkStorageConnection : JobStorageConnection
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(MySqlStorageConnection));
+        private readonly ILogger<EntityFrameworkStorageConnection> _logger;
+        private readonly HangfireDbContext _dbContext;
+        private readonly IOptions<EntityFrameworkStorageConfiguration> _options;
 
-        private readonly MySqlStorage _storage;
-        private readonly MySqlStorageOptions _storageOptions;
-
-        public MySqlStorageConnection(MySqlStorage storage, MySqlStorageOptions storageOptions)
+        public EntityFrameworkStorageConnection(ILogger<EntityFrameworkStorageConnection> logger, HangfireDbContext dbContext, IOptions<EntityFrameworkStorageConfiguration> options)
         {
-            if (storage == null) throw new ArgumentNullException("storage");
-            _storage = storage;
-            _storageOptions = storageOptions;
+            _logger = logger;
+            _dbContext = dbContext;
+            _options = options;
+
         }
 
         public override IWriteOnlyTransaction CreateWriteTransaction() => 

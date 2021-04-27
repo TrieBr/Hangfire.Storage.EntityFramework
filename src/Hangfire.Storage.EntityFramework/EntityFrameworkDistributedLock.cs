@@ -1,20 +1,19 @@
 using System;
 using System.Data;
 using System.Threading;
-using Dapper;
 using Hangfire.Logging;
 using Hangfire.Storage.EntityFramework.Locking;
 
 namespace Hangfire.Storage.EntityFramework
 {
-	public class MySqlDistributedLock: IDisposable, IComparable
+	public class EntityFrameworkDistributedLock: IDisposable, IComparable
 	{
-		private static readonly ILog Logger = LogProvider.GetLogger(typeof(MySqlDistributedLock));
+		private static readonly ILog Logger = LogProvider.GetLogger(typeof(EntityFrameworkDistributedLock));
 
 		private readonly string _resource;
 		private readonly TimeSpan _timeout;
-		private readonly MySqlStorage _storage;
-		private readonly MySqlStorageOptions _storageOptions;
+		private readonly EntityFrameworkStorage _storage;
+		private readonly EntityFrameworkStorageOptions _storageOptions;
 		private readonly DateTime _start;
 		private readonly CancellationToken _cancellationToken;
 
@@ -22,16 +21,16 @@ namespace Hangfire.Storage.EntityFramework
 
 		private readonly IDbConnection _connection;
 
-		public MySqlDistributedLock(
+		public EntityFrameworkDistributedLock(
 			IDbConnection connection, string resource, TimeSpan timeout,
-			MySqlStorageOptions storageOptions): 
+			EntityFrameworkStorageOptions storageOptions): 
 			this(connection, resource, timeout, storageOptions, CancellationToken.None) { }
 
-		public MySqlDistributedLock(
+		public EntityFrameworkDistributedLock(
 			IDbConnection connection, string resource, TimeSpan timeout,
-			MySqlStorageOptions storageOptions, CancellationToken cancellationToken)
+			EntityFrameworkStorageOptions storageOptions, CancellationToken cancellationToken)
 		{
-			Logger.TraceFormat("MySqlDistributedLock resource={0}, timeout={1}", resource, timeout);
+			Logger.TraceFormat("EntityFrameworkDistributedLock resource={0}, timeout={1}", resource, timeout);
 
 			_storageOptions = storageOptions;
 			_resource = resource;
@@ -76,7 +75,7 @@ namespace Hangfire.Storage.EntityFramework
 			}
 		}
 
-		internal MySqlDistributedLock Acquire()
+		internal EntityFrameworkDistributedLock Acquire()
 		{
 			Logger.TraceFormat("Acquire resource={0}, timeout={1}", _resource, _timeout);
 
@@ -104,7 +103,7 @@ namespace Hangfire.Storage.EntityFramework
 
 			if (insertedObjectCount == 0)
 			{
-				throw new MySqlDistributedLockException("cannot acquire lock");
+				throw new EntityFrameworkDistributedLockException("cannot acquire lock");
 			}
 
 			return this;
@@ -135,13 +134,13 @@ namespace Hangfire.Storage.EntityFramework
 		{
 			if (obj == null) return 1;
 
-			var mySqlDistributedLock = obj as MySqlDistributedLock;
-			if (mySqlDistributedLock != null)
+			var EntityFrameworkDistributedLock = obj as EntityFrameworkDistributedLock;
+			if (EntityFrameworkDistributedLock != null)
 				return string.Compare(
-					this.Resource, mySqlDistributedLock.Resource,
+					this.Resource, EntityFrameworkDistributedLock.Resource,
 					StringComparison.OrdinalIgnoreCase);
 
-			throw new ArgumentException("Object is not a mySqlDistributedLock");
+			throw new ArgumentException("Object is not a EntityFrameworkDistributedLock");
 		}
 	}
 }

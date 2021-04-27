@@ -20,7 +20,7 @@ namespace Hangfire.Storage.EntityFramework
     /// <summary>
     /// EntityFramework JobStorage. Mostly just a wrapper around other services registered in the service container.
     /// </summary>
-    public class EntityFrameworkStorage : JobStorage, IDisposable
+    internal class EntityFrameworkStorage : JobStorage, IDisposable
     {
         private readonly ILogger<EntityFrameworkStorage> _logger;
         private readonly HangfireDbContext _dbContext;
@@ -28,6 +28,7 @@ namespace Hangfire.Storage.EntityFramework
         private readonly IMonitoringApi _monitoringApi;
         private readonly IOptions<EntityFrameworkStorageConfiguration> _options;
         private readonly IServiceProvider _serviceProvider;
+
         public EntityFrameworkStorage(ILogger<EntityFrameworkStorage> logger,
             HangfireDbContext dbContext,
             IStorageConnection storageConnection,
@@ -42,6 +43,8 @@ namespace Hangfire.Storage.EntityFramework
             _options = options;
             _serviceProvider = serviceProvider;
         }
+
+
 
         public void Dispose() { }
 

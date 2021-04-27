@@ -35,6 +35,7 @@ namespace Hangfire.Storage.EntityFramework
             modelBuilder.Entity<Set>(e => e.ToTable($"{_storageOptions.Value.TablesPrefix}{nameof(Entities.Set)}s"));
             modelBuilder.Entity<State>(e => e.ToTable($"{_storageOptions.Value.TablesPrefix}{nameof(State)}s"));
             modelBuilder.Entity<List>(e => e.ToTable($"{_storageOptions.Value.TablesPrefix}{nameof(List)}s"));
+            modelBuilder.Entity<Entities.Server>(e => e.ToTable($"{_storageOptions.Value.TablesPrefix}{nameof(Entities.Server)}s"));
 
         }
 
@@ -50,7 +51,9 @@ namespace Hangfire.Storage.EntityFramework
         public DbSet<Set> Sets => Set<Set>();
         public DbSet<State> States => Set<State>();
         public DbSet<List> Lists => Set<List>();
+        public DbSet<Entities.Server> Servers => Set<Entities.Server>();
 
+        
 
 
 

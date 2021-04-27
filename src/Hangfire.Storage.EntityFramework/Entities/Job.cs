@@ -7,10 +7,6 @@ namespace Hangfire.Storage.EntityFramework.Entities
 {
     internal class Job : ExpireEntity<int>
     {
-        /// <summary>
-        /// State of the job.
-        /// </summary>
-        public JobState State { get; set; }
 
         /// <summary>
         /// Text version of the state.
@@ -34,6 +30,16 @@ namespace Hangfire.Storage.EntityFramework.Entities
         /// Date/Time the job was created.
         /// </summary>
         public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// Parameters for the job.
+        /// </summary>
+        public ICollection<JobParameter> Parameters { get; set; }
+
+        /// <summary>
+        /// State history of the job.
+        /// </summary>
+        public ICollection<JobState> StateHistory { get; set; }
 
     }
 

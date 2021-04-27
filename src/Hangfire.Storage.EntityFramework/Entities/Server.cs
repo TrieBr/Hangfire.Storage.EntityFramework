@@ -11,7 +11,7 @@ namespace Hangfire.Storage.EntityFramework.Entities
         /// <summary>
         /// Date/Time of Last Heart beat from the server
         /// </summary>
-        public DateTime? LastHeartBeat { get; set; }
+        public DateTime? LastHeartbeat { get; set; }
 
         /// <summary>
         /// Raw Data.

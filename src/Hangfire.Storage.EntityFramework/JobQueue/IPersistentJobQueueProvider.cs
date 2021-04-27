@@ -2,6 +2,7 @@
 {
     public interface IPersistentJobQueueProvider
     {
+        string GetProviderName();
         IPersistentJobQueue GetJobQueue();
         IPersistentJobQueueMonitoringApi GetJobQueueMonitoringApi();
     }
